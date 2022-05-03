@@ -26,16 +26,11 @@ where
         K: Add + Eq + Hash + ToOwned<Owned = K>,
     {
         fn new(calculation: T) -> Cacher<T, K>
-        where
-            K: Add + Eq + Hash + ToOwned<Owned = K>,
-            T: Fn(K) -> K,
         {
             Cacher { calculation, dict: HashMap::new() }
         }
 
         fn value(&mut self, arg: K) -> <K as ToOwned>::Owned
-        where
-            K: Add + Eq + Hash + ToOwned<Owned = K>,
         {
             self.dict.entry(arg.to_owned()).or_insert_with(|| {
                 (self.calculation)(arg)
