@@ -1,10 +1,14 @@
+use std::rc::Rc;
+
 enum List {
-    Cons(i32, Box<List>),
+    Cons(i32, Rc<List>),
     Nil,
 }
 
 use List::{Cons, Nil};
 
 fn main() {
-    let _list = Cons(1, Box::new(Cons(2, Box::new(Cons(3, Box::new(Nil))))));
+    let a = Rc::new(Cons(5, Rc::new(Cons(10, Rc::new(Nil)))));
+    let _b = Cons(3, Rc::clone(&a));
+    let _c = Cons(3, Rc::clone(&a));
 }
